@@ -1,4 +1,5 @@
 package es.daw.productosjdbc.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Producto {
 
     private Integer codigo;
     private String nombre;
-    private double precio;
+    private Double precio;
+    private Integer stock;
     private Fabricante fabricante;
 }

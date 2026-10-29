@@ -2,10 +2,7 @@ package es.daw.productosjdbc.dto;
 
 import es.daw.productosjdbc.model.Fabricante;
 import es.daw.productosjdbc.model.Producto;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +27,10 @@ public class ProductoForm {
     @Positive(message = "El precio debe ser mayor que 0")
     private Double precio;
 
+    @NotNull(message = "El stock es obligatorio")
+    @PositiveOrZero(message = "El stock debe ser mayor que 0")
+    private Integer stock;
+
     @NotNull(message = "Selecciona un fabricante")
     private Integer codigoFabricante;
 
@@ -39,13 +40,13 @@ public class ProductoForm {
         form.setCodigo(p.getCodigo());
         form.setNombre(p.getNombre());
         form.setPrecio(p.getPrecio());
+        form.setStock(p.getStock());
         form.setCodigoFabricante(p.getFabricante().getCodigo());
         return form;
     }
 
     /** Formulario (vista) → Producto (modelo). Del fabricante solo tenemos el código. */
     public Producto aProducto() {
-        Fabricante fabricante = new Fabricante(codigoFabricante, null);
-        return new Producto(codigo, nombre, precio, fabricante);
+        return new Producto(codigo, nombre, precio, stock, new Fabricante(codigoFabricante, null));
     }
 }
